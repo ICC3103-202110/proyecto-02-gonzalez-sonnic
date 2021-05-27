@@ -6,23 +6,7 @@ const model = require('./model');
 const { printTable } = require('console-table-printer');
 
 function getTitle(){
-  let azar = Math.random()
   let mess = 'Banner'
-  if(azar > 0 && azar <= 0.2){
-    mess = 'Colossal'
-  }
-  if(azar > 0.2 && azar <= 0.4){
-    mess = 'Epic'
-  }
-  if(azar > 0.4 && azar <= 0.6){
-    mess = 'Banner'
-  }
-  if(azar > 0.6 && azar <= 0.8){
-    mess = 'Big Money-ne'
-  }
-  if(azar > 0.8 && azar <= 1){
-    mess ='Big Money-sw'
-  }
   return chalk.yellow(
     figlet.textSync('UNIT - CONVERT',
       {
