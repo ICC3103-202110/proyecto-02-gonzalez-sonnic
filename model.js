@@ -1,5 +1,5 @@
 InitModel =  {
-    nombre : '',
+    nombre :[],
     temp : [],
     max : [],
     min : [],

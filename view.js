@@ -22,12 +22,19 @@ function getTableTemperature(model){
     let nombres = nombre
     let maximo = max
     let minimo = min
-    let names = []
+    let Table = []
+    /*
+    for (let i=0;i<nombre.length;i++){
+      Table.push({nombre: chalk.green(nombres),temp: chalk.green(temperatura), max: chalk.yellow(maximo), min: chalk.yellow(minimo)})
+    }
+    return Table
+    */
     return [
       {
         nombre: chalk.green(nombres),temp: chalk.green(temperatura), max: chalk.yellow(maximo), min: chalk.yellow(minimo)
       }
     ]
+    
 }
 function ValueQuestion(model){
   //const {LeftValue,RightValue,LeftUnit,RightUnit} = model
