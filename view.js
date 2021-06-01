@@ -6,12 +6,11 @@ const model = require('./model');
 const { printTable } = require('console-table-printer');
 
 function getTitle(){
-  let mess = 'Banner'
   return chalk.yellow(
-    figlet.textSync('UNIT - CONVERT',
+    figlet.textSync('Weather aap',
       {
         horizontalLayout: 'full',
-        font: mess
+        font: 'Banner'
       }
     )
   )
@@ -23,7 +22,7 @@ function getTableTemperature(model){
     let nRightValue = parseFloat(RightValue)
     return [
       {
-        LeftValue: chalk.green(nLeftValue),LeftUnit: chalk.green(LeftUnit), RightValue: chalk.yellow(nRightValue), RightUnit: chalk.yellow(RightUnit)
+        nombre: chalk.green(nLeftValue),temp: chalk.green(LeftUnit), max: chalk.yellow(nRightValue), min: chalk.yellow(RightUnit)
       }
     ]
 }
@@ -31,15 +30,16 @@ function ValueQuestion(model){
   const {LeftValue,RightValue,LeftUnit,RightUnit} = model
   const message1 = 'Left temperature is source? '
   const message2 ='Temperature value to convert?'
-  const message3 = 'From'
+  const message3 = 'select action'
   const message4 = 'To'
-  const option = ['Celsius', 'Fahrenheit', 'Kelvin', ' ']
+  const option = ['Add city', 'Update city', 'Delete city']
   return inquirer.prompt([
     {
-      name: 'option',
-      type: 'input',
-      message: message1,
-      default: "Y/N",
+      type: 'list',
+      name: 'unit',
+      message: message3,
+      default: 'use arrows keys',
+      choices: option
       
     },
     {
@@ -71,7 +71,6 @@ function view(model){
   }
 }
 module.exports = {
-  EmptyTable,
   view,
   ValueQuestion,
 }
