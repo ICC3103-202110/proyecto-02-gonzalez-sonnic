@@ -17,50 +17,37 @@ function getTitle(){
 }
 
 function getTableTemperature(model){
-    const {LeftValue,RightValue,LeftUnit,RightUnit} = model
-    let nLeftValue = parseFloat(LeftValue);
-    let nRightValue = parseFloat(RightValue)
+    const{nombre,temp,max,min} = model
+    let temperatura = temp
+    let nombres = nombre
+    let maximo = max
+    let minimo = min
+    let names = []
     return [
       {
-        nombre: chalk.green(nLeftValue),temp: chalk.green(LeftUnit), max: chalk.yellow(nRightValue), min: chalk.yellow(RightUnit)
+        nombre: chalk.green(nombres),temp: chalk.green(temperatura), max: chalk.yellow(maximo), min: chalk.yellow(minimo)
       }
     ]
 }
 function ValueQuestion(model){
-  const {LeftValue,RightValue,LeftUnit,RightUnit} = model
-  const message1 = 'Left temperature is source? '
-  const message2 ='Temperature value to convert?'
+  //const {LeftValue,RightValue,LeftUnit,RightUnit} = model
+  const message1 = 'location'
   const message3 = 'select action'
-  const message4 = 'To'
   const option = ['Add city', 'Update city', 'Delete city']
   return inquirer.prompt([
     {
       type: 'list',
-      name: 'unit',
+      name: 'Citys',
       message: message3,
       default: 'use arrows keys',
       choices: option
       
     },
     {
-      name: 'temperature',
       type: 'input',
-      message: message2,
-      default: parseFloat(LeftValue),
-    },
-    {
-      type: 'list',
-      name: 'unit',
-      message: message3,
-      default: 'use arrows keys',
-      choices: option
-    },
-    {
-      type: 'list',
-      name: 'convert',
-      message: message4,
-      default: 'use arrows keys',
-      choices: option
+      name: 'option',
+      message: message1,
+      default: "?",
     }
   ])
 }
