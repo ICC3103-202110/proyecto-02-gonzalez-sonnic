@@ -1,22 +1,28 @@
+function update_table(temperature){
+    return (Number(temperature))
+}
 
-
-function Update(Citys,option,names,Model){
-    let azar = Math.random()
-    if(Citys === 'Add city'){
-        newOption = option
+function añadir_ciudad(d,add_city){
+    if (d[0][0] === ""){
+        d[0].splice(0,1)
     }
-    else if(Citys === 'Update city'){
+    d[0].push(add_city)
+}
 
-    }
-    else if(Citys === 'Delete city'){
 
-    }
-    return{
-        ...Model,
-        nombre: newOption,
-        temp: azar,
-        max: azar,
-        min: azar
+function delete_ciudad(d,ciudad_eliminar){
+    var u = d[0].length
+    let myArray = d[0]
+    for (let i = 0; i < u ; i++){
+        if (ciudad_eliminar === myArray[i]){
+            d[0].splice(i,1)
+        }
     }
 }
-module.exports = Update
+
+
+module.exports = {
+    update_table,
+    añadir_ciudad,
+    delete_ciudad,
+}

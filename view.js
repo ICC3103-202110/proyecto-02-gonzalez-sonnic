@@ -1,70 +1,89 @@
-var prompt = require('prompt-sync')({sigint:true});  
-const figlet = require('figlet');
-const chalk = require('chalk');  
-const inquirer = require('inquirer')
-const model = require('./model');
 const { printTable } = require('console-table-printer');
+const figlet = require('figlet');
+const chalk = require('chalk');
+var inquirer = require('inquirer');
+const { Table } = require('console-table-printer');
+
+function viewapp(d){
+    const p = new Table();
+    var u = d[0].length
+    for (let i = 0; i < u ; i++){
+        p.addRow({ "City": d[0][i], "Temp": Math.random(), "Max": Math.random(), "Min": Math.random()});   
+    }
+    p.printTable();
+    return d
+}
+
 
 function getTitle(){
-  return chalk.yellow(
-    figlet.textSync('Weather aap',
-      {
-        horizontalLayout: 'full',
-        font: 'Banner'
-      }
+    return chalk.green(
+        figlet.textSync(
+            'Weather App',
+            {
+                horizontalLayout: 'full',
+                font: 'Nancyj-Underlined'
+            }
+        )
     )
-  )
 }
 
-function getTableTemperature(model){
-    const{nombre,temp,max,min} = model
-    let temperatura = temp
-    let nombres = nombre
-    let maximo = max
-    let minimo = min
-    let Table = []
-    /*
-    for (let i=0;i<nombre.length;i++){
-      Table.push({nombre: chalk.green(nombres),temp: chalk.green(temperatura), max: chalk.yellow(maximo), min: chalk.yellow(minimo)})
-    }
-    return Table
-    */
-    return [
-      {
-        nombre: chalk.green(nombres),temp: chalk.green(temperatura), max: chalk.yellow(maximo), min: chalk.yellow(minimo)
-      }
-    ]
-    
-}
-function ValueQuestion(model){
-  //const {LeftValue,RightValue,LeftUnit,RightUnit} = model
-  const message1 = 'location'
-  const message3 = 'select action'
-  const option = ['Add city', 'Update city', 'Delete city']
-  return inquirer.prompt([
-    {
-      type: 'list',
-      name: 'Citys',
-      message: message3,
-      default: 'use arrows keys',
-      choices: option
+
+function chooses_1(a){
+    return inquirer.prompt([
+        {
+            type: 'rawlist',
+            name: 'opciones',
+            message: '',
+            choices: ['Add City', 'Update City', 'Delete City'],
       
-    },
-    {
-      type: 'input',
-      name: 'option',
-      message: message1,
-      default: "?",
-    }
-  ])
+        },
+    ])    
 }
-function view(model){
-  return {
-    title: getTitle(),
-    table: getTableTemperature(model)
-  }
+
+
+function chooses_2(a){
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'add_city',
+            message: "Name of the city you want to add  :",
+            default: "",    
+        }
+    ])
+
 }
+
+
+function chooses_3(a){
+    return inquirer.prompt([
+        {
+            type: 'rawlist',
+            name: 'ciudad_eliminar',
+            message: 'Pick The City to Delete',
+            choices: a[0],   
+        },
+    ])
+}
+
+function chooses_4(a){
+    return inquirer.prompt([
+        {
+            type: 'rawlist',
+            name: 'ciudad_Actualizar',
+            message: 'Pick The City to Update',
+            choices: a[0],   
+        },
+    ])
+}
+
+
+
 module.exports = {
-  view,
-  ValueQuestion,
+    getTitle,
+    viewapp,
+    chooses_1,
+    chooses_2,
+    chooses_3,
+    chooses_4,
 }
+
