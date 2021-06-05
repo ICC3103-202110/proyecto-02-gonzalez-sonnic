@@ -14,6 +14,14 @@ function viewapp(d){
     return d
 }
 
+function BigTable(nombre, temp,Max,Min){
+    const BTable = [
+        {
+            "nombre":nombre, "temperatura":temp, "maximo":Max, "minimo":Min
+        }
+    ]
+    return BTable
+}
 
 function getTitle(){
     return chalk.green(
@@ -28,12 +36,12 @@ function getTitle(){
 }
 
 
-function chooses_1(a){
+function chooses(a){
     return inquirer.prompt([
         {
             type: 'rawlist',
             name: 'opciones',
-            message: '',
+            message: 'select option',
             choices: ['Add City', 'Update City', 'Delete City'],
       
         },
@@ -41,7 +49,7 @@ function chooses_1(a){
 }
 
 
-function chooses_2(a){
+function ADDCity(a){
     return inquirer.prompt([
         {
             type: 'input',
@@ -54,7 +62,7 @@ function chooses_2(a){
 }
 
 
-function chooses_3(a){
+function deleteCity(a){
     return inquirer.prompt([
         {
             type: 'rawlist',
@@ -65,7 +73,7 @@ function chooses_3(a){
     ])
 }
 
-function chooses_4(a){
+function updateCity(a){
     return inquirer.prompt([
         {
             type: 'rawlist',
@@ -81,9 +89,9 @@ function chooses_4(a){
 module.exports = {
     getTitle,
     viewapp,
-    chooses_1,
-    chooses_2,
-    chooses_3,
-    chooses_4,
+    chooses,
+    ADDCity,
+    deleteCity,
+    updateCity,
 }
 
