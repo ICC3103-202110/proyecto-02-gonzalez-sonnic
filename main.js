@@ -8,4 +8,4 @@ const {app} = require('./app')
 var inquirer = require('inquirer');
 
 let t=[[""],"0","0","0"]
-console.log(app(t));
+app(t)

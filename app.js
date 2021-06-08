@@ -7,11 +7,12 @@ var inquirer = require('inquirer');
 
 
 async function app(d){
+    let verification = false
     while (true) {
         const currentView = viewapp(d);
         console.clear()
         console.log(getTitle());
-        console.log(viewapp(currentView));
+        viewapp(currentView,verification);
         const {opciones} = await (chooses(d));
         if (opciones === 'Add City'){                                                /*decide agregar una ciudad*/
             const {add_city} = await (ADDCity(d))
@@ -24,6 +25,7 @@ async function app(d){
             const {ciudad_eliminar} = await (deleteCity(d))
             delete_ciudad(d,ciudad_eliminar) 
         }
+        verification = true
     }
 }    
 module.exports = {
