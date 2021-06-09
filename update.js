@@ -1,3 +1,19 @@
+const axios = require('axios')
+async function GetTempInApi(NameCity){
+    const URL = "api.openweathermap.org/data/2.5/weather?q="+NameCity+"&appid=36e0137cea2ff88ff93dee221e46ecdd&units=metric"
+    const Dato = []
+    try {
+        const respond = axios.get(URL)
+        Dato[0] = respond.data.main.temp
+        Dato[1] = respond.data.main.temp_min
+        Dato[2] = respond.data.main.temp_max
+        return Dato
+    }
+    catch (error){
+        console.error("Error con la api")
+    }
+}
+
 function update_table(temperature){
     return (Number(temperature))
 }
