@@ -5,20 +5,26 @@ const axios = require('axios')
 var inquirer = require('inquirer');
 const { Table } = require('console-table-printer');
 
-async function GetTempInApi(NameCity){
-    const URL = "http://api.openweathermap.org/data/2.5/weather?q="+NameCity+"&appid=4a1eda2045c44d25c46638c9f6b344ea&units=metric"
-    const Dato = []
+async function GetTempInApi(nombre,opt){
+    const URL = "http://api.openweathermap.org/data/2.5/weather?q="+nombre+"&appid=4a1eda2045c44d25c46638c9f6b344ea&units=metric"
+    const DATO = []
+    const respond =  await axios.get(URL)
     try{
-        var respond = await axios.get(URL)
-        Dato.push(respond.data.main.temp)
-        Dato.push(respond.data.main.temp_min)
-        Dato.push(respond.data.main.temp_max)
-        return Dato
+        if(opt === 0){
+            DATO[0] = respond.data.main.temp
+            return DATO
+        }
+        if(opt === 1){
+            DATO[1] = respond.data.main.temp_min
+            return DATO
+        }
+        if(opt === 2){
+            DATO[2] = respond.data.main.temp_max
+            return DATO
+        }
     }
-    catch (error){
-        console.error("Error con la api >:(")
-        const Datos = [0,0,0]
-        return Datos
+    catch(error){
+        console.error("Error en la api  "+error)
     }
 }
 
@@ -27,15 +33,17 @@ function viewapp(d,ver){
     var u = d[0].length
     if(ver === true){
         for (let i = 0; i < u ; i++){
-            const API = GetTempInApi(d[0][i])
-            p.addRow({ "City": d[0][i], "Temp": API[0], "Max": chalk.red(API[1]), "Min": chalk.blue(API[2])});   
+            const temp = GetTempInApi(d[0][i],0)
+            const temp_min = GetTempInApi(d[0][i],1)
+            const temp_max = GetTempInApi(d[0][i],2)
+            p.addRow({ "City": d[0][i], "Temp": chalk.yellow(temp.then(val => (val))), "Max": chalk.red(temp_max.then(val => (val))), "Min": chalk.blue(temp_min.then(val => (val)))});   
         }
         p.printTable();
         return d
     }
     else{
         for (let i = 0; i < u ; i++){
-            p.addRow({ "City": d[0][i], "Temp": 0, "Max": 0, "Min": 0});   
+            p.addRow({ "City": "Nombre Ciudad", "Temp": 0, "Max": 0, "Min": 0});   
         }
         p.printTable();
         return d
