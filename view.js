@@ -5,27 +5,14 @@ const axios = require('axios')
 var inquirer = require('inquirer');
 const { Table } = require('console-table-printer');
 
-async function GetTempInApi(nombre,opt){
+async function GetTempInApi(nombre){
     const URL = "http://api.openweathermap.org/data/2.5/weather?q="+nombre+"&appid=4a1eda2045c44d25c46638c9f6b344ea&units=metric"
     const DATO = []
     const respond =  await axios.get(URL)
-    try{
-        if(opt === 0){
-            DATO[0] = respond.data.main.temp
-            return DATO
-        }
-        if(opt === 1){
-            DATO[1] = respond.data.main.temp_min
-            return DATO
-        }
-        if(opt === 2){
-            DATO[2] = respond.data.main.temp_max
-            return DATO
-        }
-    }
-    catch(error){
-        console.error("Error en la api  "+error)
-    }
+    DATO[0] = respond.data.main.temp
+    DATO[1] = respond.data.main.temp_min
+    DATO[2] = respond.data.main.temp_max
+    return DATO
 }
 
 function viewapp(d,ver){
@@ -33,13 +20,19 @@ function viewapp(d,ver){
     var u = d[0].length
     if(ver === true){
         for (let i = 0; i < u ; i++){
-            const temp = GetTempInApi(d[0][i],0)
-            const temp_min = GetTempInApi(d[0][i],1)
-            const temp_max = GetTempInApi(d[0][i],2)
-            p.addRow({ "City": d[0][i], "Temp": chalk.yellow(temp.then(val => (val))), "Max": chalk.red(temp_max.then(val => (val))), "Min": chalk.blue(temp_min.then(val => (val)))});   
+            GetTempInApi(d[0][i]).then(val => {
+                p.addRow({ "City": d[0][i],"temp": val[0],"min": val[1],"max": val[2]})
+                p.printTable()
+                return d
+            })
+           
+
+            //p.addRow({ "City": d[0][i], "Temp": chalk.yellow(temp.then(val => (val))), "Max": chalk.red(temp_max.then(val => (val))), "Min": chalk.blue(temp_min.then(val => (val)))});   
+            /*  p.addRow({"City": d[0][i], "temp": val[0],"temp_min": val[1],"temp_max": val[2]})
+                p.printTable()
+                return d */
         }
-        p.printTable();
-        return d
+        
     }
     else{
         for (let i = 0; i < u ; i++){
@@ -79,6 +72,7 @@ function chooses(a){
             name: 'opciones',
             message: 'select option',
             choices: ['Add City', 'Update City', 'Delete City'],
+            default: "\n"
       
         },
     ])    
@@ -91,7 +85,7 @@ function ADDCity(a){
             type: 'input',
             name: 'add_city',
             message: "Name of the city you want to add  :",
-            default: "",    
+            default: "\n",    
         }
     ])
 
