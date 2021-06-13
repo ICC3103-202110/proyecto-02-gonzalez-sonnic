@@ -9,10 +9,15 @@ async function GetTempInApi(nombre){
     const URL = "http://api.openweathermap.org/data/2.5/weather?q="+nombre+"&appid=4a1eda2045c44d25c46638c9f6b344ea&units=metric"
     const DATO = []
     const respond =  await axios.get(URL)
-    DATO[0] = respond.data.main.temp
-    DATO[1] = respond.data.main.temp_min
-    DATO[2] = respond.data.main.temp_max
-    return DATO
+    try{
+        DATO[0] = respond.data.main.temp
+        DATO[1] = respond.data.main.temp_min
+        DATO[2] = respond.data.main.temp_max
+        return DATO
+    }
+    catch(error){
+        console.error("Error con la api, revise el nombre de la ciduad      "+ error)
+    }
 }
 
 function viewapp(d,ver){
@@ -21,8 +26,10 @@ function viewapp(d,ver){
     if(ver === true){
         for (let i = 0; i < u ; i++){
             GetTempInApi(d[0][i]).then(val => {
-                p.addRow({ "City": d[0][i],"temp": val[0],"min": val[1],"max": val[2]})
+                p.addRow({ "              City": d[0][i],"temp": chalk.yellow(val[0]),"max": chalk.red(val[2]),"min": chalk.blue(val[1])})
+                console.clear()
                 p.printTable()
+                console.log("\n\n\n")
                 return d
             })
            
