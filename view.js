@@ -5,6 +5,19 @@ const axios = require('axios')
 var inquirer = require('inquirer');
 const { Table } = require('console-table-printer');
 
+function getTitle(){
+    return chalk.green(
+        figlet.textSync(
+            'Weather App',
+            {
+                horizontalLayout: 'full',
+                font: 'Nancyj-Underlined'
+            }
+        )
+    )
+}
+
+
 async function GetTempInApi(nombre){
     const URL = "http://api.openweathermap.org/data/2.5/weather?q="+nombre+"&appid=4a1eda2045c44d25c46638c9f6b344ea&units=metric"
     const DATO = []
@@ -28,6 +41,7 @@ function viewapp(d,ver){
             GetTempInApi(d[0][i]).then(val => {
                 p.addRow({ "              City": d[0][i],"temp": chalk.yellow(val[0]),"max": chalk.red(val[2]),"min": chalk.blue(val[1])})
                 console.clear()
+                console.log(getTitle())
                 p.printTable()
                 console.log("\n\n\n")
                 return d
@@ -59,17 +73,6 @@ function BigTable(nombre, temp,Max,Min){
     return BTable
 }
 
-function getTitle(){
-    return chalk.green(
-        figlet.textSync(
-            'Weather App',
-            {
-                horizontalLayout: 'full',
-                font: 'Nancyj-Underlined'
-            }
-        )
-    )
-}
 
 
 function chooses(a){
