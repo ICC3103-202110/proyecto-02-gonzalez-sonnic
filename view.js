@@ -41,7 +41,7 @@ async function GetTempInApi(nombre){
         return DATO
     }
     catch(error){
-        console.error("Error con la api, revise el nombre de la ciduad      "+ error)
+        console.error("Error con la api, revise el nombre de la ciduad      "+respond.data.main.error+ error)
     }
 }
 
@@ -51,7 +51,7 @@ function viewapp(d,ver){
     if(ver === true){
         for (let i = 0; i < u ; i++){
             GetTempInApi(d[0][i]).then(val => {
-                p.addRow({ "              City": d[0][i],"Temp": chalk.yellow(val[0]),"Max": chalk.red(val[2]),"mMn": chalk.blue(val[1])})
+                p.addRow({ "              City": d[0][i],"Temp": chalk.yellow(val[0]),"Max": chalk.red(val[2]),"Min": chalk.blue(val[1])})
                 console.clear()
                 console.log(getTitle())
                 p.printTable()
