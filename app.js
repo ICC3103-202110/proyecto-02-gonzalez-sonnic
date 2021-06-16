@@ -13,7 +13,7 @@ async function app(d){
         console.clear()
         console.log(getTitle());
         viewapp(currentView,verification);
-        const {opciones} = await (chooses(d));
+        const {opciones} = await (chooses());
         if (opciones === 'Add City'){                                                /*decide agregar una ciudad*/
             const {add_city} = await (ADDCity(d))
             añadir_ciudad(d,add_city)

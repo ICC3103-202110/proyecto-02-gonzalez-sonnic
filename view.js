@@ -17,6 +17,18 @@ function getTitle(){
     )
 }
 
+function chooses(){
+    return inquirer.prompt([
+        {
+            type: 'rawlist',
+            name: 'opciones',
+            message: 'select option',
+            choices: ['Add City', 'Update City', 'Delete City'],
+            default: "\n"
+      
+        },
+    ])    
+}
 
 async function GetTempInApi(nombre){
     const URL = "http://api.openweathermap.org/data/2.5/weather?q="+nombre+"&appid=4a1eda2045c44d25c46638c9f6b344ea&units=metric"
@@ -39,10 +51,11 @@ function viewapp(d,ver){
     if(ver === true){
         for (let i = 0; i < u ; i++){
             GetTempInApi(d[0][i]).then(val => {
-                p.addRow({ "              City": d[0][i],"temp": chalk.yellow(val[0]),"max": chalk.red(val[2]),"min": chalk.blue(val[1])})
+                p.addRow({ "              City": d[0][i],"Temp": chalk.yellow(val[0]),"Max": chalk.red(val[2]),"mMn": chalk.blue(val[1])})
                 console.clear()
                 console.log(getTitle())
                 p.printTable()
+                console.log("use las flechas del teclado para elegir una opcion (no apareceran las opciones hasta que use las flechas)")
                 console.log("\n\n\n")
                 return d
             })
@@ -75,18 +88,7 @@ function BigTable(nombre, temp,Max,Min){
 
 
 
-function chooses(a){
-    return inquirer.prompt([
-        {
-            type: 'rawlist',
-            name: 'opciones',
-            message: 'select option',
-            choices: ['Add City', 'Update City', 'Delete City'],
-            default: "\n"
-      
-        },
-    ])    
-}
+
 
 
 function ADDCity(a){
